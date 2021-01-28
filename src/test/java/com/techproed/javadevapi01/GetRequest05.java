@@ -1,6 +1,6 @@
 package com.techproed.javadevapi01;
 
-import org.hamcrest.Matchers;
+import static org.hamcrest.Matchers.*;
 import org.junit.Test;
 import static io.restassured.RestAssured.*;
 import io.restassured.http.ContentType;
@@ -41,10 +41,9 @@ public class GetRequest05 extends TestBaseJsonPlaceHolder{
 				assertThat().
 				statusCode(200).
 				header("Server", "cloudflare").
-				contentType(ContentType.JSON).
-				body("userId", Matchers.equalTo(7),
-					 "title", Matchers.equalTo("esse et quis iste est earum aut impedit"),
-					 "completed", Matchers.equalTo(false));
+				body("userId", equalTo(7),
+					 "title", equalTo("esse et quis iste est earum aut impedit"),
+					 "completed", equalTo(false));
 
 	}
 

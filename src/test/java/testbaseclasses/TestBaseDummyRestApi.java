@@ -1,7 +1,6 @@
 package testbaseclasses;
 
 import org.junit.Before;
-
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.specification.RequestSpecification;
 
@@ -15,5 +14,5 @@ public class TestBaseDummyRestApi {
 							setBaseUri("http://dummy.restapiexample.com").
 							build();	
 	}
-
+	
 }
