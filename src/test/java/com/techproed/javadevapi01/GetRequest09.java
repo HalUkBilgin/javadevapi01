@@ -88,8 +88,7 @@ public class GetRequest09 extends TestBaseDummyRestApi {
 
 		//Assert that "Charde Marshall" is one of the employees whose salary is greater than 350,000
 		assertTrue(nameList.contains("Charde Marshall"));
-		
-		
+			
 	}
 	
 }
