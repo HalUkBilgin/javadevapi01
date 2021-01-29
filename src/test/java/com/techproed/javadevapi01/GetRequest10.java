@@ -14,15 +14,6 @@ import testdata.TestDataJsonPlaceHolder;
 public class GetRequest10 extends TestBaseJsonPlaceHolder {
 	
 	/*
-	 	De-Serialization: Converting JSON Data to Java Object
-	 	Serialization: Converting Java Object to JSON Data
-	 	
-	 	For De-Serialization and Serialization, we have 2 main ways;
-	 	1) GSON Library ==> It converts "response body" to Java Objects
-	 	2) Object Mapper Library ==> It converts "response body" to Java Objects
-	*/
-	
-	/*
 	  When 
 	  		I send GET Request to https://jsonplaceholder.typicode.com/todos/2
 	  Then 
@@ -33,6 +24,15 @@ public class GetRequest10 extends TestBaseJsonPlaceHolder {
 	  		And header "Via" is "1.1 vegur"
 	  		And header "Server" is "cloudflare"
 	 */
+	
+	/*
+	 	De-Serialization: Converting JSON Data to Java Object
+	 	Serialization: Converting Java Object to JSON Data
+	 	
+	 	For Serialization and De-Serialization we have 2 main ways;
+	 	1) GSON Library
+	 	2) Object Mapper Library
+	*/
 	
 	@Test
 	public void get01() {
@@ -45,14 +45,12 @@ public class GetRequest10 extends TestBaseJsonPlaceHolder {
 		TestDataJsonPlaceHolder obj = new TestDataJsonPlaceHolder();
 		HashMap<String, Object> expectedData = obj.setUpData();
 		
-		
-		//Send Request
+		//Send request
 		Response response = given().spec(spec).when().get("/{todos}/{id}");
-		
 		response.prettyPrint();
 		
 		//Assert
-		//1.Way: body() + Map
+		//1.Way: body() + expectedData Map
 //		response.
 //			then().
 //			assertThat().
@@ -63,22 +61,18 @@ public class GetRequest10 extends TestBaseJsonPlaceHolder {
 //			headers("Via", expectedData.get("Via"),
 //					"Server", expectedData.get("Server"));
 		
-		//2.Way:
-		HashMap<String, Object> actualData = response.as(HashMap.class);
-		System.out.println(actualData);
+		//2.Way: assertEquals() + expectedData Map <== GSON
+		assertEquals(expectedData.get("statusCode"), response.getStatusCode());
 		
-		assertEquals((int)expectedData.get("statusCode"), response.getStatusCode());
+		HashMap<String, Object> actualData = response.as(HashMap.class);
 		
 		assertEquals(expectedData.get("completed"), actualData.get("completed"));
-		
 		assertEquals(expectedData.get("userId"), actualData.get("userId"));
-		
 		assertEquals(expectedData.get("title"), actualData.get("title"));
 		
 		assertEquals(expectedData.get("Via"), response.getHeader("Via"));
-		
 		assertEquals(expectedData.get("Server"), response.getHeader("Server"));
-		
+
 	}
 
 }

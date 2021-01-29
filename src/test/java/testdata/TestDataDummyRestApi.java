@@ -6,14 +6,14 @@ import java.util.List;
 
 public class TestDataDummyRestApi {
 	
-	public HashMap<String, Object> expectedData = new HashMap<>();
+	HashMap<String, Object> expectedData = new HashMap<>();
 	
 	public HashMap<String, Object> setUpData(){
-
+		
 		expectedData.put("statusCode", 200);
-		expectedData.put("fifthEmployee", "Airi Satou");
-		expectedData.put("numOfEmployee", 24);
-		expectedData.put("secondSalary", "170750");
+		expectedData.put("fifthEmpName", "Airi Satou");
+		expectedData.put("numOfEmployees", 24);
+		expectedData.put("secondLastSalary", "106450");
 		
 		List<String> ageList = new ArrayList<>();
 		ageList.add("40");
@@ -22,7 +22,7 @@ public class TestDataDummyRestApi {
 		
 		expectedData.put("ages", ageList);
 		
-		HashMap<Object, Object> innerMap = new HashMap<>();
+		HashMap<String, Object> innerMap = new HashMap<>();
 		innerMap.put("id", "11");
 		innerMap.put("employee_name", "Jena Gaines");
 		innerMap.put("employee_salary", "90560");

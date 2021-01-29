@@ -3,8 +3,8 @@ package testdata;
 import java.util.HashMap;
 
 public class TestDataJsonPlaceHolder {
-
-	HashMap<String, Object> expectedData = new HashMap<>();
+	
+	HashMap<String,Object> expectedData = new HashMap<>();
 	
 	public HashMap<String, Object> setUpData(){
 		
@@ -16,5 +16,7 @@ public class TestDataJsonPlaceHolder {
 		expectedData.put("Server", "cloudflare");
 		
 		return expectedData;
+		
 	}
+
 }
