@@ -1,14 +1,12 @@
 package com.techproed.javadevapi01;
 
-import org.junit.Test;
-import static io.restassured.RestAssured.*;
 import static org.junit.Assert.assertEquals;
 
-import java.util.HashMap;
+import org.junit.Test;
+import static io.restassured.RestAssured.*;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import pojos.Bookings;
 import pojos.Data;
 import pojos.Employees;
 import testbaseclasses.TestBaseDummyRestApi;
@@ -16,13 +14,16 @@ import testbaseclasses.TestBaseDummyRestApi;
 public class PostRequest01 extends TestBaseDummyRestApi{
 	
 	/*
-	 	POST Request is used to create a new data in database
+	 	POST Request is used to create new data in database.
 	 	
-	 	POST Request needs; 1)Post Method 2)URL 3)Data 	
+	 	For POST Request we need;
+	 	1)POST Method
+	 	2)URL
+	 	3)Request body
 	*/
 	
 	/*
-	 	 When
+	 	When
 	 	  	I send a POST Request to the Url http://dummy.restapiexample.com/api/v1/create
 	 	  	by using the following Request Body {
 												    "name":"SULEYMAN ALP",
@@ -42,50 +43,45 @@ public class PostRequest01 extends TestBaseDummyRestApi{
 											    },
 											    "message": "Successfully! Record has been added."
 											 }
-	 */
-	
+	*/
 	@Test
 	public void post01() {
 		//Set the URL
-		spec.pathParams("api", "api", 
+		spec.pathParams("api", "api",
 				        "version", "v1",
 				        "create", "create");
 		
-		//Set the posted data
-		//1.Way: Use constructor without parameter
-//		Data postedData = new Data();
-//		postedData.setEmployeeName("Suleyman Alp");
-//		postedData.setEmployeeSalary(1000);
-//		postedData.setEmployeeAge(33);
-//		postedData.setProfileImage("");
+		//Set the posted body
+		//1.Way
+//		Data postedData = new Data(0, "SULEYMAN ALP", 1000, 33, "");
 		
-		//2.Way: Use constructor with parameter and type null for id
-		Data postedData = new Data(0, "Suleyman Alp", 1000, 33, "");
+		//2.Way
+		Data postedData = new Data();
+		postedData.setEmployeeName("SULEYMAN ALP");
+		postedData.setEmployeeAge(33);
+		postedData.setEmployeeSalary(1000);
+		postedData.setProfileImage("");
+		
+		//3.Way: You can create a new constructor which does not have id as parameter
+		
+		//4.Way: You can use HashMap to create posted data
+		
+		System.out.println(postedData);
+		//API is converting "" to null because of that I typed the following code
 		if(postedData.getProfileImage().equals("")) {
 			postedData.setProfileImage(null);
 		}
-		
-		//3.Way: Use Map
-//		HashMap<String, Object> postedData = new HashMap<>();
-//		postedData.put("employee_name", "Suleyman Alp");
-//		postedData.put("employee_salary", 1000);
-//		postedData.put("employee_age", 33);
-//		postedData.put("profile_image", "");
-		
-		System.out.println(postedData);
 		
 		//Send POST Request
 		Response response = given().
 								contentType(ContentType.JSON).
 								spec(spec).
-								auth().
-								basic("admin", "password123").
 								body(postedData).
 							when().
-							    post("/{api}/{version}/{create}");
+								post("/{api}/{version}/{create}");
 		response.prettyPrint();
 		
-		//Assert
+		//Assertion: GSON + POJO
 		Employees actualData = response.as(Employees.class);
 		System.out.println(actualData);
 		
@@ -93,7 +89,26 @@ public class PostRequest01 extends TestBaseDummyRestApi{
 		assertEquals(postedData.getEmployeeSalary(), actualData.getData().getEmployeeSalary());
 		assertEquals(postedData.getEmployeeAge(), actualData.getData().getEmployeeAge());
 		assertEquals(postedData.getProfileImage(), actualData.getData().getProfileImage());
-		
+			
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
